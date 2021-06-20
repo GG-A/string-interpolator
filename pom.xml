@@ -6,7 +6,7 @@
 
     <groupId>com.github.GG-A</groupId>
     <artifactId>string-interpolator</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
 
     <packaging>jar</packaging>
     <name>string-interpolator</name>
@@ -69,7 +69,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.1.0</version>    <!--3.1.0版本：2019.05-->
+                <version>3.1.0</version>        <!--3.1.0  更新于：2019.05-->
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -83,7 +83,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.1.0</version>    <!--3.1.0版本：2019.03-->
+                <version>3.1.0</version>        <!--3.1.0 更新于：2019.03-->
                 <configuration>
                     <show>private</show>
                     <nohelp>true</nohelp>
@@ -100,13 +100,25 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>2.5.2</version>            <!--2.5.2 更新于：Aug, 2014 -->
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.8.2</version>            <!--2.8.2 更新于：Aug, 2014 -->
+            </plugin>
             <!-- GPG -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.6</version>  <!--1.6版本：2015.01-->
+                <version>1.6</version>          <!--1.6 更新于：2015.01-->
                 <executions>
                     <execution>
+                        <id>sign-artifacts</id>
                         <phase>verify</phase>
                         <goals>
                             <goal>sign</goal>

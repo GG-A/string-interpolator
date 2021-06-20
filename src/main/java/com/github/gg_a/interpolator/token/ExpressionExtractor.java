@@ -40,12 +40,12 @@ public class ExpressionExtractor {
     private static final String $ = "${}";
 
     private static final List<String> KEYWORDS = Arrays.asList(
-            "abstract", "assert", "boolean", "break", "byte", "case", "catch", "char", "class", "const",
-            "continue", "default", "double", "do", "else", "enum", "extends", "false", "final", "finally",
-            "float", "for", "goto", "if", "implements", "import", "instanceof", "int", "interface", "long",
-            "native", "new", "null", "package", "private", "protected", "public", "return", "short", "static",
-            "strictfp", "super", "switch", "synchronized", "this", "throw", "throws", "transient", "true", "try",
-            "void", "volatile", "while", "_"
+            "abstract", "assert", "boolean", "break", "byte", "case", "catch", "char", "class",
+            "const", "continue", "default", "double", "do", "else", "enum", "extends", "false",
+            "final", "finally", "float", "for", "goto", "if", "implements", "import", "instanceof",
+            "int", "interface", "long", "native", "new", "null", "package", "private", "protected",
+            "public", "return", "short", "static", "strictfp", "super", "switch", "synchronized",
+            "this", "throw", "throws", "transient", "true", "try", "void", "volatile", "while", "_"
     );
 
     /**
@@ -84,18 +84,22 @@ public class ExpressionExtractor {
                     String value = literalValue.substring(startIndex, end);
                     stringTokens.add(new StringToken(value, value, STRING_LITERAL, offset + matchStr.length()));
                 } else {
-                    String substring = matchStr.substring(2, matchStr.length() - 1);
-                    String trimStr = substring.trim();
+                    String strInBrace = matchStr.substring(2, matchStr.length() - 1);
+                    String afterTrim = strInBrace.trim();
 
                     if (parseMode == InterpolationMode.EXPRESSION) {
-                        if (start != startIndex) {
+                        if (start != startIndex) {  // 不相等说明${}前面有一段常量还未添加进StringToken
                             String value = literalValue.substring(startIndex, start);
                             stringTokens.add(new StringToken(value, value, STRING_LITERAL, offset));
                         }
-                        stringTokens.add(new StringToken(trimStr, matchStr, EXPRESSION, offset));
+                        stringTokens.add(new StringToken(afterTrim, matchStr, EXPRESSION, offset));
                     } else {
-                        if (!KEYWORDS.contains(trimStr) && VALID_IDENTIFIERS.matcher(trimStr).find()) {
-                            stringTokens.add(new StringToken(trimStr, matchStr, EXPRESSION, offset));
+                        if (!KEYWORDS.contains(afterTrim) && VALID_IDENTIFIERS.matcher(afterTrim).find()) {
+                            if (start != startIndex) {  // 不相等说明${}前面有一段常量还未添加进StringToken
+                                String value = literalValue.substring(startIndex, start);
+                                stringTokens.add(new StringToken(value, value, STRING_LITERAL, offset));
+                            }
+                            stringTokens.add(new StringToken(afterTrim, matchStr, EXPRESSION, offset));
                         } else {
                             String value = literalValue.substring(startIndex, end);
                             stringTokens.add(new StringToken(value, value, STRING_LITERAL, offset + matchStr.length()));
@@ -112,6 +116,5 @@ public class ExpressionExtractor {
         }
 
         return stringTokens;
-
     }
 }
