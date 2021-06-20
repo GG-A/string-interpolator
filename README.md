@@ -132,6 +132,7 @@ public void testIdentifier() {
   <groupId>com.github.GG-A</groupId>
   <artifactId>string-interpolator</artifactId>
   <version>0.0.2</version>
+  <scope>provided</scope>
 </dependency>
 ```
 
