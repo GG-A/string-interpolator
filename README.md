@@ -39,7 +39,8 @@ System.out.println(s);
   - [IDENTIFIER模式（忽略表达式与方法调用）](#IDENTIFIER模式忽略表达式与方法调用)
 - [⚠免责声明（必看！！！）](#免责声明)
 - [💿集成方式](#集成方式)
-  - [IDEA Maven 集成](#idea-maven-集成)
+  - [IDEA Maven 集成（Java8）](#idea-maven-集成java8)
+  - [IDEA Maven 集成（Java9及以上）](#idea-maven-集成Java9及以上)
   - [IDEA普通项目（不带Maven）](#idea普通项目不带maven)
   - [Android Studio](#android-studio)
 
@@ -119,20 +120,37 @@ public void testIdentifier() {
 
 
 ## 💿集成方式
-目前支持的项目类型：  
+目前支持的项目类型： 
+- **支持Java8及Java9及以上（非模块化）项目**  
 - **IDEA Maven项目**
 - **IDEA普通项目（不带Maven）**
 - **Android Studio**  
 
-由于Eclipse 采用了自己的编译器，并没有使用javac编译器，所以string-interpolator暂**不支持在Eclipse中使用**。
+由于Eclipse 采用了自己的编译器，并没有使用javac编译器，所以`string-interpolator`暂**不支持在Eclipse中使用**。
 
-### IDEA Maven 集成
+### IDEA Maven 集成（Java8）
 ```xml
 <dependency>
   <groupId>com.github.GG-A</groupId>
   <artifactId>string-interpolator</artifactId>
   <version>0.0.2</version>
   <scope>provided</scope>
+</dependency>
+```
+
+### IDEA Maven 集成（Java9及以上）
+```xml
+<dependency>
+    <groupId>com.github.GG-A</groupId>
+    <artifactId>string-interpolator</artifactId>
+    <version>0.0.2</version>
+    <scope>provided</scope>
+    <exclusions>
+        <exclusion>
+            <groupId>com.sun</groupId>
+            <artifactId>tools</artifactId>
+        </exclusion>
+    </exclusions>
 </dependency>
 ```
 
